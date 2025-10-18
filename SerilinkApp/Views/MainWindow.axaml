@@ -22,9 +22,18 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Name="InputTextBox" Watermark="Type message..." VerticalAlignment="Center" />
-            <Button Grid.Column="1" Name="SendButton" Content="Send" Margin="8,0,0,0" VerticalAlignment="Center"
-                    MinWidth="80" />
+            <TextBox Grid.Column="0" 
+                     Text="{Binding InputText}" 
+                     Watermark="Type message..." 
+                     VerticalAlignment="Center"
+                     IsEnabled="{Binding IsConnected}" />
+            <Button Grid.Column="1" 
+                    Content="Send" 
+                    Margin="8,0,0,0" 
+                    VerticalAlignment="Center"
+                    MinWidth="80"
+                    Command="{Binding SendCommand}"
+                    IsEnabled="{Binding IsConnected}" />
         </Grid>
 
         <!-- Row 1: Checkboxes and Dropdown -->
@@ -36,15 +45,26 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <CheckBox Grid.Column="0" Name="ClearAfterSendCheckBox" Content="Clear after Send"
-                      VerticalAlignment="Center" Margin="0,0,12,0" />
-            <CheckBox Grid.Column="1" Name="ShowSentCheckBox" Content="Show sent messages in console"
-                      VerticalAlignment="Center" Margin="0,0,12,0" />
-            <CheckBox Grid.Column="2" Name="ShowTimestampCheckBox" Content="Show Timestamp" VerticalAlignment="Center"
+            <CheckBox Grid.Column="0" 
+                      IsChecked="{Binding ClearAfterSend}"
+                      Content="Clear after Send"
+                      VerticalAlignment="Center" 
+                      Margin="0,0,12,0" />
+            <CheckBox Grid.Column="1" 
+                      IsChecked="{Binding ShowSentMessages}"
+                      Content="Show sent messages in console"
+                      VerticalAlignment="Center" 
+                      Margin="0,0,12,0" />
+            <CheckBox Grid.Column="2" 
+                      IsChecked="{Binding ShowTimestamp}"
+                      Content="Show Timestamp" 
+                      VerticalAlignment="Center"
                       Margin="0,0,12,0" />
             <!-- Spacer in Grid.Column="3" -->
-            <ComboBox Grid.Column="4" Name="LineEndingComboBox" Width="140" VerticalAlignment="Center"
-                      SelectedIndex="0">
+            <ComboBox Grid.Column="4" 
+                      Width="140" 
+                      VerticalAlignment="Center"
+                      SelectedIndex="{Binding SelectedLineEndingIndex}">
                 <ComboBoxItem Content="None" />
                 <ComboBoxItem Content="NewLine" />
                 <ComboBoxItem Content="Carriage Return" />
@@ -53,7 +73,8 @@
         </Grid>
 
         <!-- Row 2: Output Console -->
-        <TextBox Grid.Row="2" Grid.Column="0" Name="OutputTextBox"
+        <TextBox Grid.Row="2" Grid.Column="0"
+                 Text="{Binding OutputText}"
                  Margin="10,8,10,0"
                  IsReadOnly="True"
                  AcceptsReturn="True"
@@ -64,7 +85,8 @@
                  Background="#FFF"
                  Foreground="#222"
                  SelectionBrush="#AADDEE"
-                 ContextMenu="{x:Null}" />
+                 ContextMenu="{x:Null}"
+                 TextWrapping="Wrap" />
 
         <!-- Row 3: Bottom controls -->
         <Grid Grid.Row="3" Grid.Column="0" Margin="10,8,10,10">
@@ -78,18 +100,43 @@
                 <ColumnDefinition Width="*" />   <!-- Spacer -->
                 <ColumnDefinition Width="Auto" /> <!-- Clear Output -->
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Name="RefreshButton" Content="Refresh" Margin="0,0,8,0" MinWidth="80" />
-            <Label Grid.Column="1" Content="Port:" VerticalAlignment="Center" Margin="0,0,4,0" Target="PortSelector" />
-            <ComboBox Grid.Column="2" Name="PortSelector" Width="120" Margin="0,0,8,0" PlaceholderText="Port" />
-            <Label Grid.Column="3" Content="Baud:" VerticalAlignment="Center" Margin="0,0,4,0" Target="BaudSelector" />
-            <ComboBox Grid.Column="4" Name="BaudSelector" Width="120" Margin="0,0,8,0"
+            <Button Grid.Column="0" 
+                    Content="Refresh" 
+                    Margin="0,0,8,0" 
+                    MinWidth="80"
+                    Command="{Binding RefreshPortsCommand}" />
+            <Label Grid.Column="1" 
+                   Content="Port:" 
+                   VerticalAlignment="Center" 
+                   Margin="0,0,4,0" />
+            <ComboBox Grid.Column="2" 
+                      Width="120" 
+                      Margin="0,0,8,0" 
+                      PlaceholderText="Port"
+                      ItemsSource="{Binding AvailablePorts}"
+                      SelectedItem="{Binding SelectedPort}"
+                      IsEnabled="{Binding !IsConnected}" />
+            <Label Grid.Column="3" 
+                   Content="Baud:" 
+                   VerticalAlignment="Center" 
+                   Margin="0,0,4,0" />
+            <ComboBox Grid.Column="4" 
+                      Width="120" 
+                      Margin="0,0,8,0"
                       PlaceholderText="Select Baud Rate"
                       ItemsSource="{Binding BaudRates}"
-                      SelectedItem="{Binding SelectedBaudRate}" />
-            <Button Grid.Column="5" Name="ConnectButton" Content="Connect" MinWidth="80" />
+                      SelectedItem="{Binding SelectedBaudRate}"
+                      IsEnabled="{Binding !IsConnected}" />
+            <Button Grid.Column="5" 
+                    Content="{Binding ConnectButtonText}" 
+                    MinWidth="80"
+                    Command="{Binding ConnectCommand}" />
             <!-- Spacer in Grid.Column="6" -->
-            <Button Grid.Column="7" Name="ClearOutputButton" Content="Clear output" MinWidth="100"
-                    HorizontalAlignment="Right" />
+            <Button Grid.Column="7" 
+                    Content="Clear output" 
+                    MinWidth="100"
+                    HorizontalAlignment="Right"
+                    Command="{Binding ClearOutputCommand}" />
         </Grid>
     </Grid>
 </Window>
