@@ -192,4 +192,17 @@ public partial class MainWindowViewModel : ViewModelBase, IDisposable
         _serialPortService.ConnectionStateChanged -= OnConnectionStateChanged;
         _serialPortService.Dispose();
     }
+    
+    /// <summary>
+    /// Exit the application.
+    /// </summary>
+    [RelayCommand]
+    public void ExitApplication()
+    {
+        if (Avalonia.Application.Current?.ApplicationLifetime is
+            Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.Shutdown();
+        }
+    }
 }
