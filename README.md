@@ -5,6 +5,8 @@
 
 SeriLink is an app that allows users to send and receive messages via a COM port. It has a simple and minimal interface, inspired to an [Arduino's](https://www.arduino.cc/en/software) Serial Monitor.
 
+<img width="1032" height="662" alt="Screenshot Serilink App" src="https://github.com/user-attachments/assets/0cfe2351-6694-4094-893c-1cc454f468a3" />
+
 ## Installation
 
 Coming soon!
