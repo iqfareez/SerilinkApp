@@ -6,8 +6,10 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="SerilinkApp.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="SerilinkApp">
+        Icon="/Assets/serilink-logo.ico"
+        Title="Serilink App • Serial Monitor Tool"
+        Width="810"
+        Height="510">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
